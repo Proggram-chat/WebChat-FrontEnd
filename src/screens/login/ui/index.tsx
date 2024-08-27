@@ -33,14 +33,15 @@ const schema: ZodType<FormData> = z.object({
 });
 
 export const LoginPage = () => {
-  const [seeCurrentPassword, setSeeCurrentPassword] = useState(false);
+  const [seeCurrentPassword, setSeeCurrentPassword] = useState(true);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = (data: FormData) => {
     console.log(data);
   };
 
@@ -57,14 +58,15 @@ export const LoginPage = () => {
           </CardTitle>
           <CardDescription>Login to your account</CardDescription>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CardContent>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col gap-3">
                 <Input
                   label="Email"
                   {...register("email")}
                   id="email"
+                  error={errors?.email?.message}
                   type="email"
                   placeholder="Email"
                 />
@@ -85,19 +87,21 @@ export const LoginPage = () => {
               </div>
               <div className="flex flex-col space-y-1.5"></div>
             </div>
-          </form>
-        </CardContent>
-        <CardFooter className="flex flex-col gap-2 justify-between">
-          <Button className="w-full h-[45px]">Login</Button>
-          <Label>
-            If you do not have an account.{" "}
+          </CardContent>
+          <CardFooter className="flex flex-col gap-2 justify-between">
+            <Button className="w-full h-[45px]" type="submit">
+              Login
+            </Button>
             <Label>
-              <Link className="text-blue-500" href="/registration">
-                Create account
-              </Link>
+              If you do not have an account.{" "}
+              <Label>
+                <Link className="text-blue-500" href="/registration">
+                  Create account
+                </Link>
+              </Label>
             </Label>
-          </Label>
-        </CardFooter>
+          </CardFooter>
+        </form>
       </Card>
     </div>
   );

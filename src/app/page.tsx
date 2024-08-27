@@ -6,8 +6,5 @@ export default function Home() {
   const router = useRouter();
   const [key, setKey] = useState(false);
 
-  useEffect(() => {
-    setKey(true);
-  }, []);
-  return key && router.push("/client");
+  return !key ? router.push("/client") : router.push("/login");
 }

@@ -12,11 +12,11 @@ export default function RootLayout({
 }>) {
   return (
     <div>
-      <ResizablePanelGroup direction="horizontal" className="min-h-[200px]">
+      <ResizablePanelGroup direction="horizontal">
         <ResizablePanel defaultSize={25} className="max-w-[400px]">
           <SideBar />
         </ResizablePanel>
-        <ResizableHandle withHandle />
+        <ResizableHandle />
         <ResizablePanel defaultSize={75}>{children}</ResizablePanel>
       </ResizablePanelGroup>
     </div>

@@ -51,8 +51,8 @@ const schema: ZodType<FormData> = z
   });
 
 export const RegistrationPage = () => {
-  const [seeCurrentPassword, setSeeCurrentPassword] = useState(false);
-  const [seeRepeatPassword, setSeeRepeatPassword] = useState(false);
+  const [seeCurrentPassword, setSeeCurrentPassword] = useState(true);
+  const [seeRepeatPassword, setSeeRepeatPassword] = useState(true);
 
   const {
     register,
