@@ -1,12 +1,15 @@
 "use client";
-import SimpleBar from "simplebar-react";
-import "simplebar-react/dist/simplebar.min.css";
 import { HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
-import { ChatList } from "@/widgets/sidebar/ui/chats";
+import Scrollbars from "react-custom-scrollbars-2";
+import { ReactNode } from "react";
 
-export const SideBar = () => {
+interface SideBarProps {
+  chats: ReactNode;
+}
+
+export const SideBar = ({ chats }: SideBarProps) => {
   return (
     <div className="max-h-[100vh]">
       <div className="bg-white gap-4 flex items-center justify-between w-full shadow-sm h-[50px] px-4 py-2">
@@ -17,9 +20,9 @@ export const SideBar = () => {
           <Input icon={<MagnifyingGlassIcon />} placeholder={"Search..."} />
         </div>
       </div>
-      <SimpleBar style={{ maxHeight: "100vh" }}>
-        <ChatList />
-      </SimpleBar>
+      <Scrollbars style={{ width: "100%", height: "100vh" }} universal={true}>
+        {chats}
+      </Scrollbars>
     </div>
   );
 };

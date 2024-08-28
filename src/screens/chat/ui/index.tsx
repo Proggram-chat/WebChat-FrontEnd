@@ -1,10 +1,6 @@
 "use client";
-import { Textarea } from "@/shared/components/ui/textarea";
-import { Button } from "@/shared/components/ui/button";
-import { PaperPlaneIcon } from "@radix-ui/react-icons";
-import { FromMessage, ToMessage } from "@/entities/message";
 import { ChatInfo } from "@/widgets/chatInfo/ui";
-import { sendMessage } from "@/shared/api/controller/controller";
+
 import Message from "@/shared/components/ui/message";
 import { SendMessageForm } from "@/features/message/sendMessage";
 
