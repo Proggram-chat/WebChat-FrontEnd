@@ -1,10 +1,10 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+'use client';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Home() {
   const router = useRouter();
   const [key, setKey] = useState(false);
 
-  return !key ? router.push("/client") : router.push("/login");
+  !key ? router.push('/client') : router.push('/login');
 }

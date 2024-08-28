@@ -1,9 +1,10 @@
-"use client";
-import { HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { Button } from "@/shared/components/ui/button";
-import { Input } from "@/shared/components/ui/input";
-import Scrollbars from "react-custom-scrollbars-2";
-import { ReactNode } from "react";
+'use client';
+import { HamburgerMenuIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import type { ReactNode } from 'react';
+import Scrollbars from 'react-custom-scrollbars-2';
+
+import { Button } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
 
 interface SideBarProps {
   chats: ReactNode;
@@ -17,10 +18,10 @@ export const SideBar = ({ chats }: SideBarProps) => {
           <HamburgerMenuIcon />
         </Button>
         <div className="w-full flex">
-          <Input icon={<MagnifyingGlassIcon />} placeholder={"Search..."} />
+          <Input icon={<MagnifyingGlassIcon />} placeholder="Search..." />
         </div>
       </div>
-      <Scrollbars style={{ width: "100%", height: "100vh" }} universal={true}>
+      <Scrollbars style={{ width: '100%', height: '100vh' }} universal>
         {chats}
       </Scrollbars>
     </div>

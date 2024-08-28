@@ -1,4 +1,13 @@
-"use client";
+'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { EyeClosedIcon, EyeOpenIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import type { ZodType } from 'zod';
+import { z } from 'zod';
+
+import { Button } from '@/shared/components/ui/button';
 import {
   Card,
   CardContent,
@@ -6,16 +15,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/shared/components/ui/card";
-import { Input } from "@/shared/components/ui/input";
-import { Button } from "@/shared/components/ui/button";
-import { Label } from "@/shared/components/ui/label";
-import Link from "next/link";
-import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
-import { z, ZodType } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+} from '@/shared/components/ui/card';
+import { Input } from '@/shared/components/ui/input';
+import { Label } from '@/shared/components/ui/label';
 
 type FormData = {
   email: string;
@@ -26,28 +28,28 @@ type FormData = {
 const schema: ZodType<FormData> = z
   .object({
     email: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
+      message: 'Username must be at least 2 characters.',
     }),
     password: z
       .string()
       .min(5, {
-        message: "Password must be at least 5 characters.",
+        message: 'Password must be at least 5 characters.',
       })
       .max(20, {
-        message: "Password must be at most 20 characters.",
+        message: 'Password must be at most 20 characters.',
       }),
     confirmPassword: z
       .string()
       .min(5, {
-        message: "Confirm Password must be at least 5 characters.",
+        message: 'Confirm Password must be at least 5 characters.',
       })
       .max(20, {
-        message: "Confirm Password must be at most 20 characters.",
+        message: 'Confirm Password must be at most 20 characters.',
       }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
+  .refine(data => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
   });
 
 export const RegistrationPage = () => {
@@ -71,16 +73,14 @@ export const RegistrationPage = () => {
   };
 
   const onSubmit = (data: FormData) => {
-    console.log("Form Data:", data);
+    console.log('Form Data:', data);
   };
 
   return (
     <div className="flex w-full items-center h-screen justify-center relative overflow-hidden">
       <Card className="max-w-[400px] border-0 shadow-none w-full bg-white/10 backdrop-blur min-w-[300px]">
         <CardHeader className="flex w-full justify-center items-center">
-          <CardTitle className="text-[36px] text-center">
-            Join the Program
-          </CardTitle>
+          <CardTitle className="text-[36px] text-center">Join the Program</CardTitle>
           <CardDescription>Create a new account</CardDescription>
         </CardHeader>
         <CardContent>
@@ -93,7 +93,7 @@ export const RegistrationPage = () => {
                     id="email"
                     type="email"
                     error={errors?.email?.message}
-                    {...register("email")}
+                    {...register('email')}
                     placeholder="Email"
                   />
                 </div>
@@ -101,19 +101,15 @@ export const RegistrationPage = () => {
                   <Input
                     action={
                       <div onClick={handleCurrentPassword}>
-                        {seeCurrentPassword ? (
-                          <EyeClosedIcon />
-                        ) : (
-                          <EyeOpenIcon />
-                        )}
+                        {seeCurrentPassword ? <EyeClosedIcon /> : <EyeOpenIcon />}
                       </div>
                     }
                     label="Password"
                     autoComplete="password"
                     id="password"
-                    type={seeCurrentPassword ? "password" : "text"}
+                    type={seeCurrentPassword ? 'password' : 'text'}
                     error={errors?.password?.message}
-                    {...register("password")}
+                    {...register('password')}
                     placeholder="Password"
                   />
                 </div>
@@ -121,30 +117,26 @@ export const RegistrationPage = () => {
                   <Input
                     action={
                       <div onClick={handleRepeatPassword}>
-                        {seeRepeatPassword ? (
-                          <EyeClosedIcon />
-                        ) : (
-                          <EyeOpenIcon />
-                        )}
+                        {seeRepeatPassword ? <EyeClosedIcon /> : <EyeOpenIcon />}
                       </div>
                     }
                     label="Repeat password"
                     id="confirmPassword"
-                    type={seeRepeatPassword ? "password" : "text"}
+                    type={seeRepeatPassword ? 'password' : 'text'}
                     error={errors?.confirmPassword?.message}
-                    {...register("confirmPassword")}
+                    {...register('confirmPassword')}
                     placeholder="Repeat password"
                   />
                 </div>
               </div>
-              <div className="flex flex-col space-y-1.5"></div>
+              <div className="flex flex-col space-y-1.5" />
             </div>
             <CardFooter className="flex flex-col gap-2 justify-between">
               <Button className="w-full h-[45px]" type="submit">
                 Register
               </Button>
               <Label>
-                Already have an account?{" "}
+                Already have an account?{' '}
                 <Link className="text-blue-500" href="/login">
                   Login to account
                 </Link>

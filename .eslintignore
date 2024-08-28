@@ -1,0 +1,9 @@
+.eslintignore
+.prettierrc
+.env
+.prettierignore
+.prettierrc.js
+tailwind.config.ts
+postcss.config.mjs
+next.config.mjs
+orval.config.ts

@@ -1,17 +1,29 @@
-"use server";
-import { ChatCard } from "@/entities/chat";
-import { getAllChatsByMember } from "@/shared/api/controller/controller";
+'use client';
 
-export default async function ChatList() {
-  const chats = await getAllChatsByMember(
-    "e0afeb8b-307e-4a4d-a8f4-9c9f5e34b2b3",
-  );
+import { useEffect } from 'react';
 
-  return (
-    <div>
-      {chats.map((chat, i) => (
-        <ChatCard {...chat} key={i} />
-      ))}
-    </div>
-  );
+import { ChatCard } from '@/entities/chat';
+import { DeleteChat } from '@/features/chat/deleteChat';
+import type { MemberChatsDTO } from '@/shared/api/model';
+import { ContextMenuItem } from '@/shared/components/ui/context-menu';
+import { useChatListStore } from '@/shared/store/chat';
+import { useSidebar } from '@/widgets/sidebar/model';
+
+export default function ChatList({ id }: { id: string }) {
+  const { getChatList } = useSidebar();
+  const { chatList } = useChatListStore();
+
+  useEffect(() => {
+    getChatList(id);
+  }, []);
+
+  return chatList?.map((chat: MemberChatsDTO, i: number) => (
+    <ChatCard
+      {...chat}
+      contextMenuItems={
+        <ContextMenuItem>{chat?.chat_id && <DeleteChat id={chat?.chat_id} />}</ContextMenuItem>
+      }
+      key={i}
+    />
+  ));
 }

@@ -7,6 +7,6 @@
  */
 
 export type GetTokenParams = {
-type: string;
-channel?: string;
+  type: string;
+  channel?: string;
 };

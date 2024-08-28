@@ -1,6 +1,6 @@
-import { cn } from "@/shared/lib/utils";
+import { cn } from '@/shared/lib/utils';
 
-type MessageType = "from" | "to";
+type MessageType = 'from' | 'to';
 
 interface MessageProps {
   type: MessageType;
@@ -13,10 +13,10 @@ export default function Message({ type, avatar, data, content }: MessageProps) {
   return (
     <div
       className={cn(
-        type === "from"
-          ? "right-0 mr-auto  bg-[#F2F2F7]"
-          : "left-0 ml-auto text-white bg-[#007AFF]",
-        "relative  p-2 rounded-md w-[50%]",
+        type === 'from'
+          ? 'right-0 mr-auto  bg-[#F2F2F7]'
+          : 'left-0 ml-auto text-white bg-[#007AFF]',
+        'relative p-2 rounded-md max-w-min',
       )}
     >
       {content}
