@@ -1,3 +1,4 @@
+"use client";
 import {
   Avatar,
   AvatarFallback,
@@ -11,43 +12,38 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/shared/components/ui/context-menu";
-
-interface ChatCardProps {
-  avatar?: string;
-  id: string;
-  chatName?: string;
-  lastMessage?: string;
-  data?: string;
-}
+import type { MemberChatsDTO } from "@/shared/api/model";
 
 export const ChatCard = ({
-  avatar,
-  chatName,
-  lastMessage,
-  data,
-  id,
-}: ChatCardProps) => {
+  chat_id,
+  chat_name,
+  chat_type,
+  sent_at,
+  member_nickname,
+  text_preview,
+  message_id,
+}: MemberChatsDTO) => {
   return (
     <ContextMenu>
       <ContextMenuTrigger>
         <Link
-          href={`/client/${id}`}
+          href={`/client/${chat_id}`}
           className={
             "w-full flex items-center gap-4 px-4 py-4 hover:bg-black/5 transition duration-100 justify-center"
           }
         >
           <Avatar>
-            <AvatarImage src={avatar} />
+            <AvatarImage src={member_nickname} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          {lastMessage ? (
+          {text_preview ? (
             <div className="w-full">
               <span className="flex w-full justify-between">
-                <h3 className="text-[14px] font-bold">{chatName}</h3>
-                <p className="text-[12px] opacity-50">011.2.233</p>
+                <h3 className="text-[14px] font-bold">{chat_name}</h3>
+                <p className="text-[12px] opacity-50">{sent_at}</p>
               </span>
 
-              <p className="text-[12px]">{lastMessage}</p>
+              <p className="text-[12px]">{text_preview}</p>
             </div>
           ) : (
             <div className="gap-2 flex-col flex">

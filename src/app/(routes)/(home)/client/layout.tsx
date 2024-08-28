@@ -16,7 +16,7 @@ export default async function RootLayout({
     <div>
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel defaultSize={25} className="max-w-[400px]">
-          <SideBar chats={<>chats</>} />
+          <SideBar chats={<ChatList />} />
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel defaultSize={75}>{children}</ResizablePanel>
