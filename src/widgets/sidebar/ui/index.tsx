@@ -1,10 +1,10 @@
 "use client";
-import { ChatCard } from "@/entities/chat";
 import SimpleBar from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
 import { HamburgerMenuIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
+import { ChatList } from "@/widgets/sidebar/ui/chats";
 
 export const SideBar = () => {
   return (
@@ -18,17 +18,7 @@ export const SideBar = () => {
         </div>
       </div>
       <SimpleBar style={{ maxHeight: "100vh" }}>
-        <div>
-          {Array.from(Array(20).keys()).map((_, i) => (
-            <ChatCard
-              key={i}
-              id={String(i)}
-              data={"91.321231"}
-              chatName={"Chat Name"}
-              lastMessage={"Чат создан нахуй"}
-            />
-          ))}
-        </div>
+        <ChatList />
       </SimpleBar>
     </div>
   );
