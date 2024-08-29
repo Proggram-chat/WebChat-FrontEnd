@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.credential-scroll div {
+  overflow-x: hidden !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

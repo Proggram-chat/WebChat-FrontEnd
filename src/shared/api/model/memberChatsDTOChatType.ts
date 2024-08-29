@@ -6,8 +6,8 @@
  * OpenAPI spec version: 3.0
  */
 
-export type MemberChatsDTOChatType =
-  (typeof MemberChatsDTOChatType)[keyof typeof MemberChatsDTOChatType];
+export type MemberChatsDTOChatType = typeof MemberChatsDTOChatType[keyof typeof MemberChatsDTOChatType];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const MemberChatsDTOChatType = {

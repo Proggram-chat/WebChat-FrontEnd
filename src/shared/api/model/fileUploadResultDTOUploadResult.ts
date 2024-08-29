@@ -6,8 +6,8 @@
  * OpenAPI spec version: 3.0
  */
 
-export type FileUploadResultDTOUploadResult =
-  (typeof FileUploadResultDTOUploadResult)[keyof typeof FileUploadResultDTOUploadResult];
+export type FileUploadResultDTOUploadResult = typeof FileUploadResultDTOUploadResult[keyof typeof FileUploadResultDTOUploadResult];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const FileUploadResultDTOUploadResult = {

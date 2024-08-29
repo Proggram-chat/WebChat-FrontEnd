@@ -7,6 +7,6 @@
  */
 
 export type GetChatMembersParams = {
-  offset?: number;
-  limit?: number;
+offset?: number;
+limit?: number;
 };

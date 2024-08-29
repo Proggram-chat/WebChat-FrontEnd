@@ -9,12 +9,12 @@ import { ContextMenuItem } from '@/shared/components/ui/context-menu';
 import { useChatListStore } from '@/shared/store/chat';
 import { useSidebar } from '@/widgets/sidebar/model';
 
-export default function ChatList({ id }: { id: string }) {
+export default function ChatList() {
   const { getChatList } = useSidebar();
   const { chatList } = useChatListStore();
 
   useEffect(() => {
-    getChatList(id);
+    getChatList('');
   }, []);
 
   return chatList?.map((chat: MemberChatsDTO, i: number) => (

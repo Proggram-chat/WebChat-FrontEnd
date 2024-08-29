@@ -9,4 +9,5 @@
 export interface ChatMemberDTO {
   member_id?: string;
   member_name?: string;
+  role?: string;
 }
