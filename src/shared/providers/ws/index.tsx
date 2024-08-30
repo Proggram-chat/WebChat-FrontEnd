@@ -17,12 +17,10 @@ export default function WSProvider({ children }: { children: ReactNode }) {
       return '';
     }
 
-    const res = await getToken({
+    return await getToken({
       channel: state.channelToken,
       type: 'CONNECTION',
     });
-
-    return res;
   };
 
   useEffect(() => {
@@ -44,7 +42,7 @@ export default function WSProvider({ children }: { children: ReactNode }) {
       const wsEndpoint = process.env.WS_ENDPOINT || 'default_endpoint';
       centrifuge = new Centrifuge(wsEndpoint, {
         getToken: getConnectionToken,
-        debug: false,
+        debug: true,
       });
       // @ts-expect-error
       const sub = centrifuge.newSubscription(state.channelToken, {

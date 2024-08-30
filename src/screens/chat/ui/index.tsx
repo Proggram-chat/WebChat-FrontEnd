@@ -11,11 +11,9 @@ import { ChatInfo } from '@/widgets/chatInfo';
 const SkeletonMessage = () => <Skeleton className="w-full h-full flex space-x-4" />;
 
 export const Chat = ({ id }: { id: string }) => {
-  const { loading, handleScroll, scrollbarRef, state, user_id, loadingMore } = useChat({
+  const { loading, handleScroll, scrollbarRef, state, user_id } = useChat({
     chat_id: id,
   });
-
-  console.log(loading);
 
   return (
     <div className="max-h-screen flex flex-col h-full">
@@ -34,7 +32,6 @@ export const Chat = ({ id }: { id: string }) => {
                     data={formatDate(message.sent_at)}
                   />
                 ))}
-            {loadingMore && <SkeletonMessage />}
           </div>
         </Scrollbars>
         <div className="flex-shrink-0">

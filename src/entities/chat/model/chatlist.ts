@@ -38,7 +38,6 @@ export const useChatListStore = create<ChatState>((set, get) => ({
     deleteChat: async (id: string) => {
       try {
         await deleteChat(id);
-        console.log('Chat deleted successfully');
         const currentChatList = get().chatList;
         const updatedChatList = currentChatList.filter(chat => chat.chat_id !== id);
         get().api.setChatList(updatedChatList);

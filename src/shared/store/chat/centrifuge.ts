@@ -22,23 +22,15 @@ export const useCentrifugeStore = create<Centrifuge>((set, get) => ({
       set({ state: { channelToken: token } });
     },
     getSubscriptionToken: async (channel: string) => {
-      const res = await getToken({
+      return await getToken({
         channel: channel,
         type: 'SUBSCRIPTION',
       });
-
-      return res;
     },
     getPersonalChannelSubscriptionToken: async () => {
       const channelToken = get().state.channelToken || '';
 
-      if (channelToken) {
-        return await get().api.getSubscriptionToken(channelToken);
-      }
-
-      console.log('getPersonalChannelSubscriptionToken');
-
-      return '';
+      return await get().api.getSubscriptionToken(channelToken);
     },
   },
 }));

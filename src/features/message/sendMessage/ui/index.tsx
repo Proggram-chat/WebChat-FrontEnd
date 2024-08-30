@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form';
 import type { ZodType } from 'zod';
 import { z } from 'zod';
 
+import { useChatStore } from '@/entities/chat/model/chat';
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
-import { useChatStore } from '@/shared/store/chat/chat';
 
 type Message = {
   content: string;
@@ -47,6 +47,7 @@ export const SendMessageForm = () => {
     <form className="flex" onSubmit={handleSubmit(onSubmit)}>
       <Input
         {...register('content')}
+        autoComplete="off"
         className="h-[40px]"
         action={
           <Button type="submit" variant="ghost" size="icon">

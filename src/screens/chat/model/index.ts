@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type Scrollbars from 'react-custom-scrollbars-2';
 
-import { useChatStore } from '@/shared/store/chat';
+import { useChatStore } from '@/entities/chat';
 import { useSessionStore } from '@/shared/store/session';
 
 interface useChatProps {
@@ -58,7 +58,6 @@ export const useChat = ({ chat_id }: useChatProps) => {
         console.error('Failed to load more messages:', error);
       } finally {
         setLoadingMore(false);
-
         if (scrollbar) {
           const newScrollHeight = scrollbar.getScrollHeight();
           scrollbar.scrollTop(previousScrollTop + (newScrollHeight - previousScrollHeight));

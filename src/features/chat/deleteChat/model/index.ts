@@ -1,4 +1,4 @@
-import { useChatListStore } from '@/shared/store/chat';
+import { useChatListStore } from '@/entities/chat';
 
 export const useDeleteChat = (id: string) => {
   const { api } = useChatListStore();
