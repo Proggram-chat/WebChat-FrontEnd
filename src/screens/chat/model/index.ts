@@ -35,7 +35,7 @@ export const useChat = ({ chat_id }: useChatProps) => {
     if (scrollbar) {
       scrollbar.scrollToBottom();
     }
-  }, [loading]);
+  }, [loading, state.chat.messages?.length]);
 
   const handleLoadMoreMessages = async () => {
     if (!loadingMore && currentPage < total_pages) {

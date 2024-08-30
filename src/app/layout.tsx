@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 
+import AuthProvider from '@/shared/providers/auth';
+import WSProvider from '@/shared/providers/ws';
+
 import './globals.css';
 
 const font = Nunito({ subsets: ['latin', 'cyrillic'] });
@@ -17,7 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={font.className}>{children}</body>
+      <body className={font.className}>
+        <AuthProvider>
+          <WSProvider>{children}</WSProvider>
+        </AuthProvider>
+      </body>
     </html>
   );
 }

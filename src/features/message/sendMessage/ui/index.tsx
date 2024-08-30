@@ -5,7 +5,7 @@ import type { ZodType } from 'zod';
 import { z } from 'zod';
 
 import { Button } from '@/shared/components/ui/button';
-import { Textarea } from '@/shared/components/ui/textarea';
+import { Input } from '@/shared/components/ui/input';
 import { useChatStore } from '@/shared/store/chat/chat';
 
 type Message = {
@@ -24,6 +24,7 @@ export const SendMessageForm = () => {
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
   } = useForm<Message>({
     resolver: zodResolver(schema),
@@ -36,27 +37,20 @@ export const SendMessageForm = () => {
         sender_id: 'e0afeb8b-307e-4a4d-a8f4-9c9f5e34b2b3',
         content: data.content,
       });
+      resetField('content');
     } catch {
       console.log('Message not sent');
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
-      handleSubmit(onSubmit);
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Textarea
+    <form className="flex" onSubmit={handleSubmit(onSubmit)}>
+      <Input
         {...register('content')}
-        className="resize-none h-full"
-        onKeyDown={handleKeyDown}
+        className="h-[40px]"
         action={
-          <Button type="submit" size="icon">
-            <PaperPlaneIcon />
+          <Button type="submit" variant="ghost" size="icon">
+            <PaperPlaneIcon color="black" />
           </Button>
         }
         placeholder="Enter your message"

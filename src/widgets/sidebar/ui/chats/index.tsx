@@ -21,7 +21,9 @@ export default function ChatList() {
     <ChatCard
       {...chat}
       contextMenuItems={
-        <ContextMenuItem>{chat?.chat_id && <DeleteChat id={chat?.chat_id} />}</ContextMenuItem>
+        <ContextMenuItem>
+          {chat?.chat_id && <DeleteChat key={chat.chat_id} id={chat?.chat_id} />}
+        </ContextMenuItem>
       }
       key={i}
     />

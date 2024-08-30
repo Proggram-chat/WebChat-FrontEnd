@@ -30,7 +30,7 @@ export const ChatCard = ({
   contextMenuItems,
 }: ChatCardProps) => {
   const [isCompact, setIsCompact] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLAnchorElement>(null);
 
   const handleResize = () => {
     if (containerRef.current) {
@@ -57,6 +57,7 @@ export const ChatCard = ({
       <ContextMenuTrigger>
         <Link
           href={`/client/${chat_id}`}
+          ref={containerRef}
           className="w-full flex items-center gap-4 px-4 py-4 hover:bg-black/5 transition duration-100 justify-center"
         >
           <Avatar>
@@ -64,7 +65,7 @@ export const ChatCard = ({
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           {!isCompact && text_preview ? (
-            <div className="w-full" ref={containerRef}>
+            <div className="w-full">
               <span className="flex w-full justify-between">
                 <h3 className="text-[14px] font-bold">{chat_name}</h3>
                 <p className="text-[12px] opacity-50">{formatDate(sent_at)}</p>

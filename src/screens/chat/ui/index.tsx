@@ -4,14 +4,18 @@ import Scrollbars from 'react-custom-scrollbars-2';
 import { SendMessageForm } from '@/features/message/sendMessage';
 import { useChat } from '@/screens/chat/model';
 import Message from '@/shared/components/ui/message';
+import { Skeleton } from '@/shared/components/ui/skeleton';
+import { formatDate } from '@/shared/lib/helpers/formatData';
 import { ChatInfo } from '@/widgets/chatInfo';
 
-const SkeletonMessage = () => <div className="animate-pulse flex space-x-4" />;
+const SkeletonMessage = () => <Skeleton className="w-full h-full flex space-x-4" />;
 
 export const Chat = ({ id }: { id: string }) => {
   const { loading, handleScroll, scrollbarRef, state, user_id, loadingMore } = useChat({
     chat_id: id,
   });
+
+  console.log(loading);
 
   return (
     <div className="max-h-screen flex flex-col h-full">
@@ -27,7 +31,7 @@ export const Chat = ({ id }: { id: string }) => {
                     type={user_id === message.sender_id ? 'to' : 'from'}
                     avatar=""
                     content={message.content}
-                    data={message.sent_at}
+                    data={formatDate(message.sent_at)}
                   />
                 ))}
             {loadingMore && <SkeletonMessage />}
