@@ -7,7 +7,7 @@
  */
 
 export interface OnSendMessageDTO {
-  author_id?: string;
   chat_id?: string;
   content?: string;
+  sender_id?: string;
 }

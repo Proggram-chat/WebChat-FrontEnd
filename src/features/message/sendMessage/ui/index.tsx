@@ -33,7 +33,7 @@ export const SendMessageForm = () => {
     try {
       await api.sendMessage({
         chat_id: 'c04eacda-2d6e-4f98-bbc2-3fbcad3e81c5',
-        author_id: 'e0afeb8b-307e-4a4d-a8f4-9c9f5e34b2b3',
+        sender_id: 'e0afeb8b-307e-4a4d-a8f4-9c9f5e34b2b3',
         content: data.content,
       });
     } catch {

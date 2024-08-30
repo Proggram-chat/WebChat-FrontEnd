@@ -6,17 +6,21 @@
  * OpenAPI spec version: 3.0
  */
 
+export * from './addChatRoleDTO';
+export * from './addMemberRoleDTO';
 export * from './chatCreatedDTO';
 export * from './chatMemberDTO';
 export * from './chatMessageDTO';
 export * from './createChatDTO';
 export * from './createChatDTOType';
+export * from './deleteMemberRoleDTO';
 export * from './fileSearchDTO';
 export * from './fileURLDTO';
 export * from './fileUploadResultDTO';
 export * from './fileUploadResultDTOUploadResult';
 export * from './getChatMembersParams';
 export * from './getTokenParams';
+export * from './getTokenType';
 export * from './joinChatDTO';
 export * from './leaveChatDTO';
 export * from './memberChatsDTO';

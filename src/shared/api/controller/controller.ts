@@ -7,9 +7,12 @@
  */
 import { customInstance } from '.././custom-instance';
 import type {
+  AddChatRoleDTO,
+  AddMemberRoleDTO,
   ChatCreatedDTO,
   ChatMemberDTO,
   CreateChatDTO,
+  DeleteMemberRoleDTO,
   FileSearchDTO,
   FileURLDTO,
   GetChatMembersParams,
@@ -26,6 +29,60 @@ import type {
 } from '.././model';
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
+
+/**
+ * Adds an existing role to a member
+ */
+export const addMemberRole = (
+  addMemberRoleDTO: AddMemberRoleDTO,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<void>(
+    {
+      url: `/api/v1/chat/role`,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      data: addMemberRoleDTO,
+    },
+    options,
+  );
+};
+
+/**
+ * Adds a new role to a chat
+ */
+export const addChatRole = (
+  addChatRoleDTO: AddChatRoleDTO,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<string>(
+    {
+      url: `/api/v1/chat/role`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: addChatRoleDTO,
+    },
+    options,
+  );
+};
+
+/**
+ * Deletes a custom role from member, leaves him with default
+ */
+export const deleteMemberRole = (
+  deleteMemberRoleDTO: DeleteMemberRoleDTO,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<void>(
+    {
+      url: `/api/v1/chat/role`,
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      data: deleteMemberRoleDTO,
+    },
+    options,
+  );
+};
 
 export const uploadFiles = (
   uploadFilesBody: UploadFilesBody,
@@ -57,6 +114,9 @@ export const sendMessage = (
   );
 };
 
+/**
+ * Searches messages by filters
+ */
 export const getMessagesByFilters = (
   messageFiltersDTO: MessageFiltersDTO,
   options?: SecondParameter<typeof customInstance>,
@@ -72,6 +132,9 @@ export const getMessagesByFilters = (
   );
 };
 
+/**
+ * Searches files by filters
+ */
 export const getFileURLs = (
   fileSearchDTO: FileSearchDTO,
   options?: SecondParameter<typeof customInstance>,
@@ -87,6 +150,9 @@ export const getFileURLs = (
   );
 };
 
+/**
+ * Creates a chat
+ */
 export const createChat = (
   createChatDTO: CreateChatDTO,
   options?: SecondParameter<typeof customInstance>,
@@ -102,21 +168,9 @@ export const createChat = (
   );
 };
 
-export const leaveChat = (
-  leaveChatDTO: LeaveChatDTO,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<void>(
-    {
-      url: `/api/v1/chat/leave`,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      data: leaveChatDTO,
-    },
-    options,
-  );
-};
-
+/**
+ * Adds a member to a chat
+ */
 export const joinChat = (
   joinChatDTO: JoinChatDTO,
   options?: SecondParameter<typeof customInstance>,
@@ -132,6 +186,9 @@ export const joinChat = (
   );
 };
 
+/**
+ * Gets a token of specified type for centrifugo
+ */
 export const getToken = (
   params: GetTokenParams,
   options?: SecondParameter<typeof customInstance>,
@@ -139,6 +196,9 @@ export const getToken = (
   return customInstance<string>({ url: `/api/v1/token`, method: 'GET', params }, options);
 };
 
+/**
+ * Gets all chats of a member
+ */
 export const getAllChatsByMember = (
   id: string,
   options?: SecondParameter<typeof customInstance>,
@@ -148,6 +208,9 @@ export const getAllChatsByMember = (
     options,
   );
 };
+/**
+ * Gets all members in a chat
+ */
 
 export const getChatMembers = (
   id: string,
@@ -160,10 +223,34 @@ export const getChatMembers = (
   );
 };
 
+/**
+ * Deletes a chat
+ */
 export const deleteChat = (id: string, options?: SecondParameter<typeof customInstance>) => {
   return customInstance<void>({ url: `/api/v1/chat/${id}`, method: 'DELETE' }, options);
 };
 
+/**
+ * Removes a member from a chat
+ */
+export const leaveChat = (
+  leaveChatDTO: LeaveChatDTO,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<void>(
+    {
+      url: `/api/v1/chat/leave`,
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      data: leaveChatDTO,
+    },
+    options,
+  );
+};
+
+export type AddMemberRoleResult = NonNullable<Awaited<ReturnType<typeof addMemberRole>>>;
+export type AddChatRoleResult = NonNullable<Awaited<ReturnType<typeof addChatRole>>>;
+export type DeleteMemberRoleResult = NonNullable<Awaited<ReturnType<typeof deleteMemberRole>>>;
 export type UploadFilesResult = NonNullable<Awaited<ReturnType<typeof uploadFiles>>>;
 export type SendMessageResult = NonNullable<Awaited<ReturnType<typeof sendMessage>>>;
 export type GetMessagesByFiltersResult = NonNullable<
@@ -171,7 +258,6 @@ export type GetMessagesByFiltersResult = NonNullable<
 >;
 export type GetFileURLsResult = NonNullable<Awaited<ReturnType<typeof getFileURLs>>>;
 export type CreateChatResult = NonNullable<Awaited<ReturnType<typeof createChat>>>;
-export type LeaveChatResult = NonNullable<Awaited<ReturnType<typeof leaveChat>>>;
 export type JoinChatResult = NonNullable<Awaited<ReturnType<typeof joinChat>>>;
 export type GetTokenResult = NonNullable<Awaited<ReturnType<typeof getToken>>>;
 export type GetAllChatsByMemberResult = NonNullable<
@@ -179,3 +265,4 @@ export type GetAllChatsByMemberResult = NonNullable<
 >;
 export type GetChatMembersResult = NonNullable<Awaited<ReturnType<typeof getChatMembers>>>;
 export type DeleteChatResult = NonNullable<Awaited<ReturnType<typeof deleteChat>>>;
+export type LeaveChatResult = NonNullable<Awaited<ReturnType<typeof leaveChat>>>;

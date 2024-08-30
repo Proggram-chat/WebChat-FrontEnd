@@ -5,8 +5,9 @@
  * Webchat application
  * OpenAPI spec version: 3.0
  */
+import type { GetTokenType } from './getTokenType';
 
 export type GetTokenParams = {
-  type: string;
-  channel?: string;
+type: GetTokenType;
+channel?: string;
 };

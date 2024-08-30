@@ -44,9 +44,12 @@ export const useChatStore = create<ChatStore>((set, get) => ({
       const oldMessages: ChatMessageDTO[] = get().state.chat.messages ?? [];
       try {
         const res = await getMessagesByFilters(filters);
-        const newMessages = res.messages.filter(
-          newMsg => !oldMessages.some(oldMsg => oldMsg.message_id === newMsg.message_id),
-        );
+
+        const newMessages =
+          res?.messages?.filter(
+            newMsg => !oldMessages.some(oldMsg => oldMsg.message_id === newMsg.message_id),
+          ) ?? [];
+
         set({
           state: {
             chat: {
