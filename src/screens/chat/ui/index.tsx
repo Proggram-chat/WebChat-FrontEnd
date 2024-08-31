@@ -23,15 +23,25 @@ export const Chat = ({ id }: { id: string }) => {
           <div className="flex-grow flex flex-col gap-4 py-2 overflow-auto">
             {loading
               ? Array.from({ length: 10 }).map((_, index) => <SkeletonMessage key={index} />)
-              : state.chat.messages?.map(message => (
-                  <Message
-                    key={message.message_id}
-                    type={user_id === message.sender_id ? 'to' : 'from'}
-                    avatar=""
-                    content={message.content}
-                    data={formatDate(message.sent_at)}
-                  />
-                ))}
+              : state.chat.messages?.map((message, index, messages) => {
+                  const isLastInSequence =
+                    index === messages.length - 1 ||
+                    messages[index + 1].sender_id !== message.sender_id;
+
+                  const showAvatar = isLastInSequence
+                    ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/640px-PNG_transparency_demonstration_1.png'
+                    : '';
+
+                  return (
+                    <Message
+                      key={message.message_id}
+                      type={user_id === message.sender_id ? 'to' : 'from'}
+                      avatar={showAvatar ? showAvatar : ''}
+                      content={message.content}
+                      data={formatDate(message.sent_at)}
+                    />
+                  );
+                })}
           </div>
         </Scrollbars>
         <div className="flex-shrink-0">

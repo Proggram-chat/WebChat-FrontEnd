@@ -1,5 +1,4 @@
 'use client';
-import moment from 'moment';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -14,6 +13,7 @@ import {
 } from '@/shared/components/ui/context-menu';
 import { trimText } from '@/shared/lib/helpers/trimText';
 import resize = Simulate.resize;
+import { formatDate } from '@/shared/lib/helpers/formatData';
 
 interface ChatCardProps extends MemberChatsDTO {
   contextMenuItems?: ReactNode;
@@ -41,16 +41,6 @@ export const ChatCard = ({
   useEffect(() => {
     handleResize();
   }, []);
-
-  const formatDate = (date?: string) => {
-    const now = moment();
-    const commentDate = moment(date);
-    if (now.diff(commentDate, 'hours') < 24) {
-      return commentDate.fromNow();
-    } else {
-      return commentDate.subtract(10, 'days').calendar();
-    }
-  };
 
   return (
     <ContextMenu>

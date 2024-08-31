@@ -50,7 +50,7 @@ export const SendMessageForm = () => {
         autoComplete="off"
         className="h-[40px]"
         action={
-          <Button type="submit" variant="ghost" size="icon">
+          <Button type="submit" className="rounded-[50%]" variant="ghost" size="icon">
             <PaperPlaneIcon color="black" />
           </Button>
         }

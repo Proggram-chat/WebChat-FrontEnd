@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { Skeleton } from '@/shared/components/ui/skeleton';
 import { cn } from '@/shared/lib/utils';
 
@@ -14,23 +16,29 @@ export default function Message({ type, avatar, data, content }: MessageProps) {
   return (
     <div className="flex gap-2">
       {avatar ? (
-        <Skeleton className="w-[32px] h-[32px] bg-gray-300 rounded" />
+        <Image
+          src={avatar}
+          alt="avatar"
+          width={32}
+          height={32}
+          className="rounded max-h-[32px] max-w-[32px] object-center object-cover"
+        />
       ) : (
-        <Skeleton className="w-[32px] h-[32px] bg-gray-300 rounded" />
+        <Skeleton className="rounded-full max-h-[32px] max-w-[32px]" />
       )}
 
-      <div className="flex flex-col">
-        <li className="text-[10px] list-none">{data}</li>
-        <div
-          className={cn(
-            type === 'from'
-              ? 'right-0 mr-auto  bg-[#F2F2F7]'
-              : 'right-0 mr-auto text-white bg-[#007AFF]',
-            'relative p-2 rounded-xl w-fit',
-          )}
-        >
-          <p className="text-[14px]">{content}</p>
-        </div>
+      <div
+        className={cn(
+          type === 'from'
+            ? 'right-0 mr-auto  bg-[#F2F2F7]'
+            : 'right-0 mr-auto text-white bg-[#007AFF]',
+          'relative p-2 rounded-xl w-fit',
+        )}
+      >
+        <span className="text-[14px] flex flex-col">
+          <p>{content}</p>
+          <li className="text-[10px] flex items-center justify-end opacity-40 list-none">{data}</li>
+        </span>
       </div>
     </div>
   );
