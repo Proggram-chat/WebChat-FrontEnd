@@ -34,6 +34,9 @@ export const SideBar = ({ chats }: SideBarProps) => {
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Billing</DropdownMenuItem>
             <DropdownMenuItem>Team</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuLabel>Leave</DropdownMenuLabel>
+
             <DropdownMenuItem>Subscription</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

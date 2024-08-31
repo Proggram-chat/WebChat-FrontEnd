@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 
+import { WSMessagesProcess } from '@/shared/processes/ws';
 import AuthProvider from '@/shared/providers/auth';
 import WSProvider from '@/shared/providers/ws';
 
@@ -22,7 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         <AuthProvider>
-          <WSProvider>{children}</WSProvider>
+          <WSProvider>
+            <WSMessagesProcess>{children}</WSMessagesProcess>
+          </WSProvider>
         </AuthProvider>
       </body>
     </html>

@@ -1,6 +1,5 @@
 'use client';
-import type { SubscriptionStateContext } from 'centrifuge';
-import { Centrifuge, SubscriptionState } from 'centrifuge';
+import { Centrifuge } from 'centrifuge';
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 
@@ -40,28 +39,14 @@ export default function WSProvider({ children }: { children: ReactNode }) {
 
     const init = async () => {
       const wsEndpoint = process.env.WS_ENDPOINT || 'default_endpoint';
+
       centrifuge = new Centrifuge(wsEndpoint, {
         getToken: getConnectionToken,
         debug: true,
       });
-      // @ts-expect-error
-      const sub = centrifuge.newSubscription(state.channelToken, {
-        getToken: api.getPersonalChannelSubscriptionToken,
-      });
 
-      sub.on('publication', ctx => {
-        console.log(ctx.data);
-      });
+      api.setCentrifuge(centrifuge);
 
-      sub.on('state', (ctx: SubscriptionStateContext) => {
-        if (ctx.newState === SubscriptionState.Subscribed) {
-          console.log('🟢');
-        } else {
-          console.log('🔴');
-        }
-      });
-
-      sub.subscribe();
       centrifuge.connect();
     };
 
