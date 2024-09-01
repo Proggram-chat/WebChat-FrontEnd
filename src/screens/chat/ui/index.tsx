@@ -76,6 +76,7 @@ export const Chat = ({ id }: { id: string }) => {
           <SendMessageForm
             preview={<Preview />}
             onSubmit={sendContent}
+            value={state.selectMessage?.content}
             actions={
               <div className="flex gap-2">
                 <UploadFiles />

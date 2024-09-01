@@ -75,7 +75,6 @@ export const useChatStore = create<ChatStore>()(
       },
       setMessages: (message: ChatMessageDTO) => {
         set(state => {
-          console.log(message);
           if (state.state.chat.messages) {
             state.state.chat.messages.push(message);
           }

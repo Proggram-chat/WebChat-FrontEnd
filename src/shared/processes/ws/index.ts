@@ -13,7 +13,6 @@ export const WSMessagesProcess = ({ children }: { children: ReactNode }) => {
     api: { setMessages },
   } = useChatStore();
 
-  console.log(state.channelToken);
   useEffect(() => {
     if (!state.centrifuge || !state.channelToken) {
       return;

@@ -46,7 +46,6 @@ export const LoginPage = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
     if (data.user_id) {
       setUser(data.user_id);
     }

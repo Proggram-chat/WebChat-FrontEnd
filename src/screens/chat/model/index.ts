@@ -32,9 +32,9 @@ export const useChat = ({ chat_id }: useChatProps) => {
 
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
   const sendContent = async (data: OnSendMessageDTO) => {
-    api.setSelectMessage(null);
-    api.setAction('send');
+    api.resetSelectMessage();
     if (state.action === 'edit') {
       await api.editMessage({
         message_id: state.selectMessage?.message_id ?? '',
@@ -60,6 +60,10 @@ export const useChat = ({ chat_id }: useChatProps) => {
         console.error('Failed to fetch initial messages:', error);
         setLoading(false);
       });
+
+    return () => {
+      api.resetSelectMessage();
+    };
   }, [chat_id, api]);
 
   useEffect(() => {
