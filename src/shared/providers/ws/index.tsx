@@ -1,7 +1,7 @@
 'use client';
 import { Centrifuge } from 'centrifuge';
 import type { ReactNode } from 'react';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { getToken } from '@/shared/api/controller/controller';
 import { useCentrifugeStore } from '@/shared/store/chat/centrifuge';
@@ -10,17 +10,25 @@ import { useSessionStore } from '@/shared/store/session';
 export default function WSProvider({ children }: { children: ReactNode }) {
   const { user_id } = useSessionStore();
   const { api, state } = useCentrifugeStore();
+  const [connectionToken, setConnectionToken] = useState<string | null>(null);
 
-  const getConnectionToken = async () => {
+  const getConnectionToken = useCallback(async () => {
+    if (connectionToken) {
+      return connectionToken;
+    }
+
     if (!state.channelToken) {
       return '';
     }
 
-    return await getToken({
+    const token = await getToken({
       channel: state.channelToken,
       type: 'CONNECTION',
     });
-  };
+    setConnectionToken(token);
+
+    return token;
+  }, [state.channelToken, connectionToken]);
 
   useEffect(() => {
     if (!user_id) {
@@ -31,18 +39,16 @@ export default function WSProvider({ children }: { children: ReactNode }) {
   }, [user_id]);
 
   useEffect(() => {
-    if (!user_id || !state.channelToken) {
+    if (!user_id || !state.channelToken || state.centrifuge) {
       return;
     }
-
-    let centrifuge: Centrifuge | null = null;
 
     const init = async () => {
       const wsEndpoint = process.env.WS_ENDPOINT || 'default_endpoint';
 
-      centrifuge = new Centrifuge(wsEndpoint, {
+      const centrifuge = new Centrifuge(wsEndpoint, {
         getToken: getConnectionToken,
-        debug: true,
+        debug: false,
       });
 
       api.setCentrifuge(centrifuge);
@@ -53,11 +59,11 @@ export default function WSProvider({ children }: { children: ReactNode }) {
     void init();
 
     return () => {
-      if (centrifuge) {
-        centrifuge.disconnect();
+      if (state.centrifuge) {
+        state.centrifuge.disconnect();
       }
     };
-  }, [user_id, state.channelToken]);
+  }, [user_id, state.channelToken, state.centrifuge, getConnectionToken]);
 
   return children;
 }

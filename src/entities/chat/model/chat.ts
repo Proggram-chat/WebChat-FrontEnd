@@ -2,28 +2,40 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 import { getMessagesByFilters, sendMessage } from '@/shared/api/controller/controller';
+import { modifyMessage } from '@/shared/api/message-controller/message-controller';
 import type {
   ChatMessageDTO,
   MessageFiltersDTO,
+  OnModifyMessageDTO,
   OnSendMessageDTO,
   PagedChatMessagesDTO,
 } from '@/shared/api/model';
 
+export type Action = 'edit' | 'delete' | 'reply' | 'send';
+
 interface ChatStore {
   state: {
+    selectMessage: ChatMessageDTO | null;
     chat: PagedChatMessagesDTO;
+    action: Action;
   };
   api: {
     setMessages: (message: ChatMessageDTO) => void;
     getMessages: (filters: MessageFiltersDTO) => Promise<void>;
     appendMessages: (filters: MessageFiltersDTO) => Promise<void>;
     sendMessage: (onSendMessageDTO: OnSendMessageDTO) => Promise<void>;
+    setSelectMessage: (message: ChatMessageDTO | null) => void;
+    setAction: (action: Action) => void;
+    resetSelectMessage: () => void;
+    editMessage: (onEditMessageDTO: OnModifyMessageDTO) => Promise<void>;
   };
 }
 
 export const useChatStore = create<ChatStore>()(
   immer((set, get) => ({
     state: {
+      action: 'send',
+      selectMessage: null,
       chat: {
         messages: [],
         current_page: 0,
@@ -31,6 +43,36 @@ export const useChatStore = create<ChatStore>()(
       },
     },
     api: {
+      resetSelectMessage: () => {
+        set(state => {
+          state.state.selectMessage = null;
+          state.state.action = 'send';
+        });
+      },
+      setAction: (action: Action) => {
+        set(state => {
+          state.state.action = action;
+        });
+      },
+      setSelectMessage: (message: ChatMessageDTO | null) => {
+        set(state => {
+          state.state.selectMessage = message;
+        });
+      },
+      editMessage: async (onEditMessageDTO: OnModifyMessageDTO) => {
+        try {
+          await modifyMessage(onEditMessageDTO);
+          set(state => {
+            state.state.chat.messages = state.state.chat.messages?.map(message =>
+              message.message_id === onEditMessageDTO.message_id
+                ? { ...message, content: onEditMessageDTO.content }
+                : message,
+            );
+          });
+        } catch (e) {
+          console.error(e);
+        }
+      },
       setMessages: (message: ChatMessageDTO) => {
         set(state => {
           console.log(message);

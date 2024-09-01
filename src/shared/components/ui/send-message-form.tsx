@@ -18,12 +18,13 @@ const schema: ZodType<Message> = z.object({
 
 interface SendMessageFormProps {
   actions: ReactNode;
+  preview?: ReactNode;
   onUploadFiles?: () => void;
   onSubmit: (data: Message) => void;
   onSendMessageSuccess?: () => void;
 }
 
-export const SendMessageForm = ({ actions, onSubmit }: SendMessageFormProps) => {
+export const SendMessageForm = ({ actions, onSubmit, preview }: SendMessageFormProps) => {
   const {
     register,
     handleSubmit,
@@ -38,7 +39,8 @@ export const SendMessageForm = ({ actions, onSubmit }: SendMessageFormProps) => 
   };
 
   return (
-    <form className="flex" onSubmit={handleSubmit(handleOnSubmit)}>
+    <form className="flex flex-col" onSubmit={handleSubmit(handleOnSubmit)}>
+      {preview}
       <Input
         {...register('content')}
         autoComplete="off"

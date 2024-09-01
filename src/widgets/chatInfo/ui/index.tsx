@@ -5,5 +5,9 @@ interface ChatInfoProps {
 }
 
 export const ChatInfo = ({ name, members, lastSeen }: ChatInfoProps) => {
-  return <div className="flex justify-center shadow-sm w-full h-[50px]">ChatInfo</div>;
+  return (
+    <div className="flex justify-center shadow-sm w-full h-full items-center max-h-[50px]">
+      ChatInfo
+    </div>
+  );
 };

@@ -45,12 +45,12 @@ export const ChatCard = ({
           </Avatar>
           {!isCompact && text_preview ? (
             <div className="w-full">
-              <span className="flex w-full justify-between">
+              <span className="flex w-full flex-wrap justify-between">
                 <h3 className="text-[14px] font-bold">{chat_name}</h3>
                 <p className="text-[12px] opacity-50">{formatDate(sent_at)}</p>
               </span>
-              <p className="text-[12px]">
-                <span className="opacity-60">Last message:</span> {trimText(text_preview, 35)}
+              <p className="text-[12px] break-words break-all  flex">
+                {trimText(text_preview, 35)}
               </p>
             </div>
           ) : null}

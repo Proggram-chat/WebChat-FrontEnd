@@ -5,40 +5,43 @@
  * Webchat application
  * OpenAPI spec version: 3.0
  */
-import type {
-  FileSearchDTO,
-  FileURLDTO,
-  UploadFilesBody,
-  UploadedFilesDTO
-} from '.././model'
 import { customInstance } from '.././custom-instance';
-
+import type { FileSearchDTO, FileURLDTO, UploadedFilesDTO, UploadFilesBody } from '.././model';
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
-
-  export const uploadFiles = (
-    uploadFilesBody: UploadFilesBody,
- options?: SecondParameter<typeof customInstance>,) => {
-      return customInstance<UploadedFilesDTO>(
-      {url: `/api/v1/file/upload`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: uploadFilesBody
+export const uploadFiles = (
+  uploadFilesBody: UploadFilesBody,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<UploadedFilesDTO>(
+    {
+      url: `/api/v1/file/upload`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: uploadFilesBody,
     },
-      options);
-    }
-  /**
+    options,
+  );
+};
+/**
  * Searches files by filters
  */
+
 export const getFileURLs = (
-    fileSearchDTO: FileSearchDTO,
- options?: SecondParameter<typeof customInstance>,) => {
-      return customInstance<FileURLDTO[]>(
-      {url: `/api/v1/file/search`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: fileSearchDTO
+  fileSearchDTO: FileSearchDTO,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<FileURLDTO[]>(
+    {
+      url: `/api/v1/file/search`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: fileSearchDTO,
     },
-      options);
-    }
-  export type UploadFilesResult = NonNullable<Awaited<ReturnType<typeof uploadFiles>>>
-export type GetFileURLsResult = NonNullable<Awaited<ReturnType<typeof getFileURLs>>>
+    options,
+  );
+};
+
+export type UploadFilesResult = NonNullable<Awaited<ReturnType<typeof uploadFiles>>>;
+export type GetFileURLsResult = NonNullable<Awaited<ReturnType<typeof getFileURLs>>>;

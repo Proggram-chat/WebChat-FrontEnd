@@ -1,6 +1,6 @@
 'use client';
 import type { ReactNode } from 'react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { ImperativePanelHandle } from 'react-resizable-panels';
 
 import {
@@ -30,14 +30,22 @@ export default function RootLayout({
     }
   };
 
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setIsCompact(true);
+    }
+  }, []);
+
   return (
     <div>
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel
+          maxSize={25}
+          minSize={5}
           onResize={() => checkPanelSize()}
           ref={panelRef}
           defaultSize={25}
-          style={{ maxWidth: isCompact ? '28px' : '400px' }}
+          style={{ maxWidth: isCompact ? '24px' : '400px' }}
           className="min-w-[80px]"
         >
           <SideBar isCompact={isCompact} chats={<ChatList isCompact={isCompact} />} />

@@ -2,7 +2,7 @@ import { Dialog } from '@radix-ui/react-dialog';
 import { DownloadIcon } from '@radix-ui/react-icons';
 import { useEffect } from 'react';
 
-import { useUploadFiles } from '@/features/message/uploadFiles/model';
+import { useUploadFiles } from '@/features/chat/uploadFiles/model';
 import { Button } from '@/shared/components/ui/button';
 import {
   DialogContent,

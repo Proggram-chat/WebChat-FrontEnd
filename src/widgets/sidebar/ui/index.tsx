@@ -22,7 +22,7 @@ interface SideBarProps {
 export const SideBar = ({ chats, isCompact }: SideBarProps) => {
   return (
     <div className="max-h-[100vh]">
-      <div className="bg-white gap-4 flex items-center justify-between w-full shadow-sm h-[50px] px-4 py-2">
+      <div className="bg-white gap-4 flex items-center justify-between w-full shadow-sm max-h-[50px] h-full px-4 py-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon">

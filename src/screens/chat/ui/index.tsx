@@ -1,19 +1,23 @@
 'use client';
+import { CopyIcon, Pencil1Icon, ResetIcon } from '@radix-ui/react-icons';
 import Scrollbars from 'react-custom-scrollbars-2';
 
-import { SendMessage } from '@/features/message/sendMessage/ui';
-import { UploadFiles } from '@/features/message/uploadFiles';
+import { SendMessage } from '@/features/chat/sendMessage';
+import { UploadFiles } from '@/features/chat/uploadFiles';
+import { Preview } from '@/features/message/preview';
 import { useChat } from '@/screens/chat/model';
+import { ContextMenuContent, ContextMenuItem } from '@/shared/components/ui/context-menu';
 import Message from '@/shared/components/ui/message';
 import { SendMessageForm } from '@/shared/components/ui/send-message-form';
 import { Skeleton } from '@/shared/components/ui/skeleton';
+import { WithIcon } from '@/shared/components/ui/with-icon';
 import { formatDate } from '@/shared/lib/helpers/formatData';
 import { ChatInfo } from '@/widgets/chatInfo';
 
 const SkeletonMessage = () => <Skeleton className="w-full h-full flex space-x-4" />;
 
 export const Chat = ({ id }: { id: string }) => {
-  const { loading, handleScroll, scrollbarRef, state, user_id, sendMessage } = useChat({
+  const { loading, api, handleScroll, scrollbarRef, state, user_id, sendContent } = useChat({
     chat_id: id,
   });
 
@@ -38,6 +42,26 @@ export const Chat = ({ id }: { id: string }) => {
 
                   return (
                     <Message
+                      contextMenu={
+                        <ContextMenuContent className="w-fit">
+                          <ContextMenuItem>
+                            <WithIcon icon={<CopyIcon />}>Copy</WithIcon>
+                          </ContextMenuItem>
+                          <ContextMenuItem>
+                            <WithIcon icon={<ResetIcon />}>Reply</WithIcon>
+                          </ContextMenuItem>
+                          {user_id === message.sender_id ? (
+                            <ContextMenuItem
+                              onClick={() => {
+                                api.setAction('edit');
+                                api.setSelectMessage(message);
+                              }}
+                            >
+                              <WithIcon icon={<Pencil1Icon />}>Edit</WithIcon>
+                            </ContextMenuItem>
+                          ) : null}
+                        </ContextMenuContent>
+                      }
                       key={message.message_id}
                       type={user_id === message.sender_id ? 'to' : 'from'}
                       avatar={showAvatar ? showAvatar : ''}
@@ -50,7 +74,8 @@ export const Chat = ({ id }: { id: string }) => {
         </Scrollbars>
         <div className="flex-shrink-0">
           <SendMessageForm
-            onSubmit={sendMessage}
+            preview={<Preview />}
+            onSubmit={sendContent}
             actions={
               <div className="flex gap-2">
                 <UploadFiles />

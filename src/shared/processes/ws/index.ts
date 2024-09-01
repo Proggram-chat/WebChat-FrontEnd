@@ -10,10 +10,10 @@ import { useCentrifugeStore } from '@/shared/store/chat/centrifuge';
 export const WSMessagesProcess = ({ children }: { children: ReactNode }) => {
   const { state, api } = useCentrifugeStore();
   const {
-    state: { chat },
     api: { setMessages },
   } = useChatStore();
 
+  console.log(state.channelToken);
   useEffect(() => {
     if (!state.centrifuge || !state.channelToken) {
       return;
@@ -25,7 +25,6 @@ export const WSMessagesProcess = ({ children }: { children: ReactNode }) => {
 
     sub.on('publication', ctx => {
       const data = ctx.data;
-      console.log(data);
       setMessages({
         sender_id: data.senderID,
         content: data.content,

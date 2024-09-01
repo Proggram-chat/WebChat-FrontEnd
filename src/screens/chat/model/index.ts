@@ -21,13 +21,35 @@ export const useChat = ({ chat_id }: useChatProps) => {
 
   const scrollbarRef = useRef<Scrollbars>(null);
 
-  const sendMessage = async (data: OnSendMessageDTO) => {
-    await api.sendMessage({
-      chat_id: chat_id,
-      content: data.content,
-      attachments: [],
-      sender_id: user_id!,
-    });
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        api.resetSelectMessage();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+  const sendContent = async (data: OnSendMessageDTO) => {
+    api.setSelectMessage(null);
+    api.setAction('send');
+    if (state.action === 'edit') {
+      await api.editMessage({
+        message_id: state.selectMessage?.message_id ?? '',
+        content: data.content,
+      });
+
+      return;
+    } else if (state.action === 'send') {
+      await api.sendMessage({
+        chat_id: chat_id,
+        content: data.content,
+        attachments: [],
+        sender_id: user_id!,
+      });
+    }
   };
 
   useEffect(() => {
@@ -88,5 +110,14 @@ export const useChat = ({ chat_id }: useChatProps) => {
     }
   };
 
-  return { handleScroll, sendMessage, loadingMore, loading, scrollbarRef, state, user_id };
+  return {
+    handleScroll,
+    sendContent,
+    loadingMore,
+    loading,
+    api,
+    scrollbarRef,
+    state,
+    user_id,
+  };
 };

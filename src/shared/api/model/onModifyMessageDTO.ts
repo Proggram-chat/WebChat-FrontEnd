@@ -7,6 +7,7 @@
  */
 
 export interface OnModifyMessageDTO {
+  chat_id?: string;
   content?: string;
   message_id?: string;
 }
