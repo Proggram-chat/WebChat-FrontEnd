@@ -4,10 +4,15 @@ import { SubscriptionState } from 'centrifuge';
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 
+import { useChatStore } from '@/entities/chat';
 import { useCentrifugeStore } from '@/shared/store/chat/centrifuge';
 
 export const WSMessagesProcess = ({ children }: { children: ReactNode }) => {
   const { state, api } = useCentrifugeStore();
+  const {
+    state: { chat },
+    api: { setMessages },
+  } = useChatStore();
 
   useEffect(() => {
     if (!state.centrifuge || !state.channelToken) {
@@ -19,7 +24,14 @@ export const WSMessagesProcess = ({ children }: { children: ReactNode }) => {
     });
 
     sub.on('publication', ctx => {
-      console.log(ctx.data);
+      const data = ctx.data;
+      console.log(data);
+      setMessages({
+        sender_id: data.senderID,
+        content: data.content,
+        message_id: data.id,
+        attachments: data.attachments,
+      });
     });
 
     sub.on('state', (ctx: SubscriptionStateContext) => {

@@ -1,8 +1,7 @@
 'use client';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { Simulate } from 'react-dom/test-utils';
+import { useRef } from 'react';
 
 import type { MemberChatsDTO } from '@/shared/api/model';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar';
@@ -11,12 +10,12 @@ import {
   ContextMenuContent,
   ContextMenuTrigger,
 } from '@/shared/components/ui/context-menu';
-import { trimText } from '@/shared/lib/helpers/trimText';
-import resize = Simulate.resize;
 import { formatDate } from '@/shared/lib/helpers/formatData';
+import { trimText } from '@/shared/lib/helpers/trimText';
 
 interface ChatCardProps extends MemberChatsDTO {
   contextMenuItems?: ReactNode;
+  isCompact?: boolean;
 }
 
 export const ChatCard = ({
@@ -27,20 +26,10 @@ export const ChatCard = ({
   member_nickname,
   text_preview,
   message_id,
+  isCompact,
   contextMenuItems,
 }: ChatCardProps) => {
-  const [isCompact, setIsCompact] = useState(false);
   const containerRef = useRef<HTMLAnchorElement>(null);
-
-  const handleResize = () => {
-    if (containerRef.current) {
-      setIsCompact(containerRef.current.offsetWidth < 140);
-    }
-  };
-
-  useEffect(() => {
-    handleResize();
-  }, []);
 
   return (
     <ContextMenu>

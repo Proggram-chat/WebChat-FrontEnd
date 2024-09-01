@@ -1,6 +1,5 @@
 import Image from 'next/image';
 
-import { Skeleton } from '@/shared/components/ui/skeleton';
 import { cn } from '@/shared/lib/utils';
 
 type MessageType = 'from' | 'to';
@@ -14,7 +13,7 @@ interface MessageProps {
 
 export default function Message({ type, avatar, data, content }: MessageProps) {
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 items-start">
       {avatar ? (
         <Image
           src={avatar}
@@ -23,17 +22,16 @@ export default function Message({ type, avatar, data, content }: MessageProps) {
           height={32}
           className="rounded max-h-[32px] max-w-[32px] object-center object-cover"
         />
-      ) : (
-        <Skeleton className="rounded-full max-h-[32px] max-w-[32px]" />
-      )}
+      ) : null}
 
       <div
         className={cn(
-          type === 'from'
-            ? 'right-0 mr-auto  bg-[#F2F2F7]'
-            : 'right-0 mr-auto text-white bg-[#007AFF]',
+          type === 'from' ? 'bg-[#F2F2F7]' : 'text-white bg-[#007AFF]',
           'relative p-2 rounded-xl w-fit',
         )}
+        style={{
+          marginLeft: avatar ? '0' : '40px', // Додаємо відступ, коли аватар відсутній
+        }}
       >
         <span className="text-[14px] flex flex-col">
           <p>{content}</p>

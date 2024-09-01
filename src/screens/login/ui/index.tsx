@@ -39,7 +39,6 @@ const schema: ZodType<FormData> = z.object({
 export const LoginPage = () => {
   const { setUser } = useSessionStore();
   const [seeCurrentPassword, setSeeCurrentPassword] = useState(true);
-  const user_id = 'e0afeb8b-307e-4a4d-a8f4-9c9f5e34b2b3';
   const {
     register,
     handleSubmit,
@@ -47,6 +46,7 @@ export const LoginPage = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FormData) => {
+    console.log(data);
     if (data.user_id) {
       setUser(data.user_id);
     }
@@ -67,11 +67,12 @@ export const LoginPage = () => {
           <CardContent>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col gap-3">
+                <p>First User: f1d5c833-8e6b-4e8a-8e9a-918b5e3d5b9b</p>
+                <p>Second User: e0afeb8b-307e-4a4d-a8f4-9c9f5e34b2b3</p>
                 <Input
                   label="userId"
                   {...register('user_id')}
                   id="user_id"
-                  value={user_id}
                   error={errors?.user_id?.message}
                   type="text"
                   placeholder="userId"

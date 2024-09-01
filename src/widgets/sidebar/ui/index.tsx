@@ -16,14 +16,15 @@ import { Input } from '@/shared/components/ui/input';
 
 interface SideBarProps {
   chats: ReactNode;
+  isCompact: boolean;
 }
 
-export const SideBar = ({ chats }: SideBarProps) => {
+export const SideBar = ({ chats, isCompact }: SideBarProps) => {
   return (
     <div className="max-h-[100vh]">
       <div className="bg-white gap-4 flex items-center justify-between w-full shadow-sm h-[50px] px-4 py-2">
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon">
               <HamburgerMenuIcon />
             </Button>
@@ -40,9 +41,11 @@ export const SideBar = ({ chats }: SideBarProps) => {
             <DropdownMenuItem>Subscription</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <div className="w-full flex">
-          <Input icon={<MagnifyingGlassIcon />} placeholder="Search..." />
-        </div>
+        {!isCompact && (
+          <div className="w-full flex">
+            <Input icon={<MagnifyingGlassIcon />} placeholder="Search..." />
+          </div>
+        )}
       </div>
       <Scrollbars style={{ width: '100%', height: '100vh' }} universal>
         {chats}

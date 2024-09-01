@@ -10,4 +10,5 @@ import type { FileUploadResultDTOUploadResult } from './fileUploadResultDTOUploa
 export interface FileUploadResultDTO {
   file_id?: string;
   upload_result?: FileUploadResultDTOUploadResult;
+  url?: string;
 }

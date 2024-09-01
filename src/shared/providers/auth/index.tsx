@@ -9,11 +9,13 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const { user_id } = useSessionStore();
   const router = useRouter();
 
-  if (user_id) {
-    router.push('/client');
-  } else {
-    router.push('/login');
-  }
+  useEffect(() => {
+    if (user_id) {
+      router.push('/client');
+    } else {
+      router.push('/login');
+    }
+  }, [user_id, router]);
 
   const data = JSON.stringify({
     chat_id: 'd1e5f99d-758f-4ebc-8b9d-48cb85b1b153',
@@ -33,5 +35,5 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  return children;
+  return <>{children}</>;
 }

@@ -7,6 +7,7 @@
  */
 
 export interface OnSendMessageDTO {
+  attachments?: string[];
   chat_id?: string;
   content?: string;
   sender_id?: string;

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type Scrollbars from 'react-custom-scrollbars-2';
 
 import { useChatStore } from '@/entities/chat';
+import type { OnSendMessageDTO } from '@/shared/api/model';
 import { useSessionStore } from '@/shared/store/session';
 
 interface useChatProps {
@@ -19,6 +20,15 @@ export const useChat = ({ chat_id }: useChatProps) => {
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
 
   const scrollbarRef = useRef<Scrollbars>(null);
+
+  const sendMessage = async (data: OnSendMessageDTO) => {
+    await api.sendMessage({
+      chat_id: chat_id,
+      content: data.content,
+      attachments: [],
+      sender_id: user_id!,
+    });
+  };
 
   useEffect(() => {
     api
@@ -78,5 +88,5 @@ export const useChat = ({ chat_id }: useChatProps) => {
     }
   };
 
-  return { handleScroll, loadingMore, loading, scrollbarRef, state, user_id };
+  return { handleScroll, sendMessage, loadingMore, loading, scrollbarRef, state, user_id };
 };

@@ -8,7 +8,7 @@ import type { MemberChatsDTO } from '@/shared/api/model';
 import { ContextMenuItem } from '@/shared/components/ui/context-menu';
 import { useSidebar } from '@/widgets/sidebar/model';
 
-export default function ChatList() {
+export default function ChatList({ isCompact }: { isCompact: boolean }) {
   const { getChatList } = useSidebar();
   const { chatList } = useChatListStore();
 
@@ -19,6 +19,7 @@ export default function ChatList() {
   return chatList?.map((chat: MemberChatsDTO, i: number) => (
     <ChatCard
       {...chat}
+      isCompact={isCompact}
       contextMenuItems={
         <ContextMenuItem>
           {chat?.chat_id && <DeleteChat key={chat.chat_id} id={chat?.chat_id} />}

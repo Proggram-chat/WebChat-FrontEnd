@@ -7,6 +7,7 @@
  */
 
 export interface ChatMemberDTO {
+  functions?: number[];
   member_id?: string;
   member_name?: string;
   role?: string;

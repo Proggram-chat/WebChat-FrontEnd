@@ -7,6 +7,7 @@
  */
 
 export interface ChatMessageDTO {
+  attachments?: string[];
   content?: string;
   message_id?: string;
   sender_id?: string;
